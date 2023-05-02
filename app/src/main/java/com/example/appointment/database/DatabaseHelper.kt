@@ -87,7 +87,7 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper (context , DB_NAME, 
         val values = ContentValues()
         values.put(APPOINTMENT_NAME, appointments.name)
         values.put(APPOINTMENT_DETAILS, appointments.details)
-        val _success = db.update((TABLE_NAME, values, ID + "=?", arrayOf(appointments.id.toString())).toLong()
+        val _success = db.update(TABLE_NAME, values, ID + "=?" + arrayOf(appointments.id.toString())).toLong()
         db.close()
         return Integer.parseInt("$_success") != -1
     }

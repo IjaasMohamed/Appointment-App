@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Appointment</string>
+    <string name="et_name">Enter Name</string>
 </resources>
