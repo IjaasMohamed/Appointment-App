@@ -61,5 +61,18 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper (context , DB_NAME, 
         return (Integer.parseInt("$_success" ) != -1 )
     }
     //select
+    fun getAppointment(_id : Int) : AppointmentListModel{
+        val appointments = AppointmentListModel() // object of task list model
+        val db = writableDatabase // object of database
+        val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $ID = $_id"
+        val cursor = db.rawQuery(selectQuery, null)
+
+        cursor?.moveToFirst()
+        appointments.id = Integer.parseInt(cursor.getString(cursor.getColumnIndex(ID)))
+        appointments.name = cursor.getString(cursor.getColumnIndex(TABLE_NAME))
+        appointments.details = cursor.getString(cursor.getColumnIndex(APPOINTMENT_DETAILS))
+        cursor.close()
+        return appointments
+    }
     
 }
