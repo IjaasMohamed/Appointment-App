@@ -61,6 +61,7 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper (context , DB_NAME, 
         return (Integer.parseInt("$_success" ) != -1 )
     }
     //select
+    @SuppressLint("Range")
     fun getAppointment(_id : Int) : AppointmentListModel{
         val appointments = AppointmentListModel() // object of task list model
         val db = writableDatabase // object of database
@@ -74,5 +75,20 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper (context , DB_NAME, 
         cursor.close()
         return appointments
     }
-    
+    //delete
+    fun deleteAppointment(_id : Int) : Boolean {
+        val db = this.writableDatabase
+        val _success = db.delete(TABLE_NAME, ID + "=?" + arrayOf(_id.toString())).toLong()
+        return Integer.parseInt("$_success") != -1
+    }
+    //update
+    fun updateAppointment(appointments: AppointmentListModel) : Boolean{
+        val db = this.writableDatabase //object creation of database
+        val values = ContentValues()
+        values.put(APPOINTMENT_NAME, appointments.name)
+        values.put(APPOINTMENT_DETAILS, appointments.details)
+        val _success = db.update((TABLE_NAME, values, ID + "=?", arrayOf(appointments.id.toString())).toLong()
+        db.close()
+        return Integer.parseInt("$_success") != -1
+    }
 }
