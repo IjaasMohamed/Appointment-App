@@ -1,5 +1,7 @@
 package com.example.appointment.database
 
+import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -27,6 +29,7 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper (context , DB_NAME, 
         onCreate(p0)
     }
 
+    @SuppressLint("Range")
     fun getAllAppointment () : List <AppointmentListModel> {
         val appointmentlist = ArrayList<AppointmentListModel> ()
         val db = writableDatabase
@@ -46,4 +49,17 @@ class DatabaseHelper (context : Context) : SQLiteOpenHelper (context , DB_NAME, 
         cursor.close()
         return appointmentlist
     }
+
+    //insert
+        fun addAppointment(appointments : AppointmentListModel) : Boolean{
+        val db = this.writableDatabase
+        val values = ContentValues()
+        values.put(APPOINTMENT_NAME, appointments.name)
+        values.put(APPOINTMENT_DETAILS,appointments.details)
+        val _success = db.insert(TABLE_NAME, null, values)
+        db.close()
+        return (Integer.parseInt("$_success" ) != -1 )
+    }
+    //select
+    
 }
